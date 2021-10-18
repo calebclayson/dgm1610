@@ -12,6 +12,12 @@ public class PlayerController : MonoBehaviour
     private float rotX;                     //Current X rotation of camera
     private Camera camera;
     private Rigidbody rb;
+    private Weapon weapon;
+
+    void Awake()
+    {
+        weapon = GetComponent<Weapon>();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -26,12 +32,18 @@ public class PlayerController : MonoBehaviour
     {
         Move();
         CamLook();
-    }
-
-    void private void FixedUpdate() 
-    {
+        if(Input.GetButton("Fire1"))
+        {
+            if(weapon.CanShoot())
+                weapon.Shoot();
+        }
         if(Input.GetButton("Jump"))
             Jump();
+    }
+
+    void FixedUpdate() 
+    {
+        
     }
 
     void Move() 
@@ -41,6 +53,7 @@ public class PlayerController : MonoBehaviour
 
         // rb.velocity = new Vector3(x, rb.velocity.y, z);
         Vector3 dir = transform.right * x + transform.forward * z;
+        dir.y = rb.velocity.y;
         rb.velocity = dir;
     }
 

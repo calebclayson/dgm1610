@@ -37,13 +37,8 @@ public class PlayerController : MonoBehaviour
             if(weapon.CanShoot())
                 weapon.Shoot();
         }
-        if(Input.GetButton("Jump"))
+        if(Input.GetButtonDown("Jump"))
             Jump();
-    }
-
-    void FixedUpdate() 
-    {
-        
     }
 
     void Move() 
@@ -72,6 +67,8 @@ public class PlayerController : MonoBehaviour
         Ray ray = new Ray(transform.position, Vector3.down);
 
         if(Physics.Raycast(ray, 1.1f))
+        {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
     }
 }
